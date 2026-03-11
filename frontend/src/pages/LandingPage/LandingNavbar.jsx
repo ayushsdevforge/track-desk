@@ -21,7 +21,7 @@ const LandingNavbar = ({ onLogin, onRegister, scrollTo }) => (
       </div>
 
       <button onClick={onRegister}
-        className="cursor-pointer px-5 py-2 text-sm font-semibold text-white bg-brand-800 rounded-xl hover:bg-brand-700 shadow-md shadow-brand-900/20 transition-all duration-300">
+        className="cursor-pointer px-6 py-3 text-sm font-semibold text-white bg-brand-900 rounded-xl hover:bg-brand-700 shadow-md shadow-brand-900/20 transition-all duration-300">
         Get Started
       </button>
     </div>
