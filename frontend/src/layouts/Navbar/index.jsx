@@ -33,8 +33,8 @@ const Navbar = ({ onMenuClick }) => {
 
         {/* Page title */}
         <div className="min-w-0 flex-1">
-          <h1 className="text-sm font-bold text-brand-950 leading-tight truncate">{page.title}</h1>
-          <p className="text-xs text-gray-500 hidden sm:block truncate">{page.subtitle}</p>
+          <h1 className="text-base font-bold text-brand-950 leading-tight truncate">{page.title}</h1>
+          <p className="text-sm text-gray-500 hidden sm:block truncate">{page.subtitle}</p>
         </div>
 
         {/* Right side — greeting + notification */}

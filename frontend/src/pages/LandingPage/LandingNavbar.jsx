@@ -10,12 +10,12 @@ const LandingNavbar = ({ onLogin, onRegister, scrollTo }) => (
       <div className="hidden md:flex items-center gap-8">
         {NAV_LINKS.map((l) => (
           <button key={l} onClick={() => scrollTo(l.toLowerCase().replace(/ /g, '-'))}
-            className="cursor-pointer text-sm text-gray-600 hover:text-brand-800 transition-colors font-medium">
+            className="cursor-pointer text-base text-gray-600 hover:text-brand-800 transition-colors font-medium">
             {l}
           </button>
         ))}
         <button onClick={onLogin}
-          className="cursor-pointer text-sm text-brand-800 hover:text-brand-900 transition-colors font-semibold">
+          className="cursor-pointer text-base text-brand-800 hover:text-brand-900 transition-colors font-semibold">
           Login
         </button>
       </div>
