@@ -59,6 +59,12 @@ const EmployeesPage = () => {
   };
 
   const handleDelete = async () => {
+    if (!deleteTarget || deleteTarget.role === 'admin') {
+      toast.error('Admin accounts cannot be removed');
+      setDeleteTarget(null);
+      return;
+    }
+
     setDeleting(true);
     try { await userAPI.delete(deleteTarget._id); toast.success('Removed'); setDeleteTarget(null); fetchUsers(); }
     catch (err) { toast.error(getErrorMessage(err)); }
@@ -82,7 +88,9 @@ const EmployeesPage = () => {
     { key: 'actions', label: 'Actions', render: (r) => (
       <div className="flex items-center gap-2">
         <button onClick={() => openEdit(r)} className="p-1.5 rounded-lg text-brand-600 hover:bg-brand-50" title="Edit"><HiPencilSquare className="h-4 w-4" /></button>
-        <button onClick={() => setDeleteTarget(r)} className="p-1.5 rounded-lg text-red-600 hover:bg-red-50" title="Remove"><HiTrash className="h-4 w-4" /></button>
+        {r.role !== 'admin' && (
+          <button onClick={() => setDeleteTarget(r)} className="p-1.5 rounded-lg text-red-600 hover:bg-red-50" title="Remove"><HiTrash className="h-4 w-4" /></button>
+        )}
       </div>
     )},
   ];

@@ -73,8 +73,14 @@ export const updateUser = async (req, res, next) => {
 // DELETE /api/users/:id   (admin)
 export const deleteUser = async (req, res, next) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
+    const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ success: false, message: "User not found" });
+
+    if (user.role === "admin") {
+      return res.status(403).json({ success: false, message: "Admin accounts cannot be deleted" });
+    }
+
+    await user.deleteOne();
 
     res.json({ success: true, message: "User deleted" });
   } catch (err) {
