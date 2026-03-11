@@ -295,9 +295,17 @@ The entire frontend UI was **designed and built by me from scratch**. I drew ins
 
 ---
 
+## Bonus Features Implemented
+
+| # | Bonus Feature | Status | Details |
+|---|--------------|--------|----------|
+| 1 | **Monthly Attendance Reports** | ✅ Implemented | Employee monthly report with calendar grid showing daily attendance status, present/absent/unmarked counts, and attendance percentage. Admin monthly report across all employees with aggregate statistics and per-employee breakdowns. |
+| 2 | **Pagination & Filters** | ✅ Implemented | Backend `paginate()` helper with `page`/`limit`/`skip` query params (default: 10 per page). Date-range filters (`from`/`to`) on attendance endpoints. Status filter (`pending`/`approved`/`rejected`) on leave endpoints. `userId` filter for admin views. Frontend paginated Table component with previous/next controls. |
+| 3 | **Email Notifications** | ✅ Implemented | Real email integration using **Nodemailer** with SMTP. OTP emails for registration and password reset. Leave approval/rejection notification emails sent to employees with leave details (type, dates, duration). |
+---
+
 ## Known Limitations
 
-- **No email integration** — Email notifications are mocked (in-app only via NotificationContext).
 - **No file uploads** — Leave requests don't support document attachments.
 - **Client-side notifications** — Notifications are stored in React state only; they don't persist across sessions or devices.
 - **No rate limiting** — API endpoints are not rate-limited (should be added for production).
