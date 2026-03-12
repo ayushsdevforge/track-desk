@@ -56,9 +56,25 @@ export const updateUser = async (req, res, next) => {
   try {
     const { fullName, email, role, leaveBalance } = req.body;
 
+    if (email !== undefined || role !== undefined) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and role cannot be changed from the admin panel",
+      });
+    }
+
+    const updates = {};
+
+    if (fullName !== undefined) updates.fullName = fullName;
+    if (leaveBalance !== undefined) updates.leaveBalance = leaveBalance;
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ success: false, message: "No valid fields provided for update" });
+    }
+
     const user = await User.findByIdAndUpdate(
       req.params.id,
-      { fullName, email, role, leaveBalance },
+      updates,
       { new: true, runValidators: true }
     );
 
