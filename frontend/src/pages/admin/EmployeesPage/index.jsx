@@ -17,15 +17,13 @@ const EmployeesPage = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [createModal, setCreateModal] = useState(false);
-  const [createForm, setCreateForm] = useState({ fullName: '', email: '', password: '', role: 'employee' });
+  const [createForm, setCreateForm] = useState({ fullName: '', email: '', password: '' });
   const [creating, setCreating] = useState(false);
   const [editModal, setEditModal] = useState(null);
   const [editForm, setEditForm] = useState({ fullName: '', leaveBalance: 20 });
   const [saving, setSaving] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
-
-  const activeUser = users.find((user) => user._id === editModal);
 
   const fetchUsers = useCallback(async () => {
     setLoading(true);
@@ -42,7 +40,7 @@ const EmployeesPage = () => {
   const handleCreate = async (e) => {
     e.preventDefault();
     setCreating(true);
-    try { await userAPI.create(createForm); toast.success('Employee added'); setCreateModal(false); setCreateForm({ fullName: '', email: '', password: '', role: 'employee' }); fetchUsers(); }
+    try { await userAPI.create(createForm); toast.success('Employee added'); setCreateModal(false); setCreateForm({ fullName: '', email: '', password: '' }); fetchUsers(); }
     catch (err) { toast.error(getErrorMessage(err)); }
     finally { setCreating(false); }
   };
@@ -111,11 +109,6 @@ const EmployeesPage = () => {
           <FormInput label="Full Name" placeholder="John Doe" value={createForm.fullName} onChange={(e) => setCreateForm({ ...createForm, fullName: e.target.value })} required />
           <FormInput label="Email" type="email" placeholder="john@example.com" value={createForm.email} onChange={(e) => setCreateForm({ ...createForm, email: e.target.value })} required />
           <FormInput label="Password" type="password" placeholder="Min 6 characters" value={createForm.password} onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })} required minLength={6} />
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Role</label>
-            <select value={createForm.role} onChange={(e) => setCreateForm({ ...createForm, role: e.target.value })}
-              className="w-full px-3 py-2 border border-brand-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"><option value="employee">Employee</option><option value="admin">Admin</option></select>
-          </div>
           <div className="flex justify-end gap-3 pt-2">
             <Button variant="secondary" type="button" onClick={() => setCreateModal(false)}>Cancel</Button>
             <Button type="submit" loading={creating}>Add Employee</Button>
@@ -126,18 +119,6 @@ const EmployeesPage = () => {
       <Modal isOpen={!!editModal} onClose={() => setEditModal(null)} title="Edit Employee">
         <form onSubmit={handleUpdate} className="space-y-4">
           <FormInput label="Full Name" value={editForm.fullName} onChange={(e) => setEditForm({ ...editForm, fullName: e.target.value })} required />
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
-            <div className="w-full px-3 py-2.5 border border-brand-200 rounded-xl text-sm bg-gray-50 text-gray-500">
-              {activeUser?.email || 'N/A'}
-            </div>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Role</label>
-            <div className="w-full px-3 py-2.5 border border-brand-200 rounded-xl text-sm bg-gray-50 text-gray-500 capitalize">
-              {activeUser?.role || 'employee'}
-            </div>
-          </div>
           <FormInput label="Leave Balance" type="number" min="0" value={editForm.leaveBalance} onChange={(e) => setEditForm({ ...editForm, leaveBalance: Number(e.target.value) })} required />
           <div className="flex justify-end gap-3 pt-2">
             <Button variant="secondary" type="button" onClick={() => setEditModal(null)}>Cancel</Button>

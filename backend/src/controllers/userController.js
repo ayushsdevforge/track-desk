@@ -3,7 +3,7 @@ import User from "../models/User.js";
 // POST /api/users      (admin)
 export const createUser = async (req, res, next) => {
   try {
-    const { fullName, email, password, role } = req.body;
+    const { fullName, email, password } = req.body;
 
     if (!fullName || !email || !password) {
       return res.status(400).json({ success: false, message: "Full name, email, and password are required" });
@@ -13,7 +13,7 @@ export const createUser = async (req, res, next) => {
       return res.status(409).json({ success: false, message: "Email already registered" });
     }
 
-    const user = await User.create({ fullName, email, password, role: role || "employee" });
+    const user = await User.create({ fullName, email, password, role: "employee" });
 
     res.status(201).json({ success: true, data: user });
   } catch (err) {
